@@ -14,6 +14,7 @@ Colorization and configuration supports for multiple languages for the Monaco Ed
 * jade
 * lua
 * objective-c
+* postiats
 * powershell
 * python
 * r
@@ -22,6 +23,16 @@ Colorization and configuration supports for multiple languages for the Monaco Ed
 * swift
 * vb
 * xml
+
+Also `css` dialects: 
+
+* css
+* less
+* scss
+
+## Issues
+
+Please file issues concering `monaco-languages` in the [`monaco-editor`-repository](https://github.com/Microsoft/monaco-editor/issues).
 
 ## Installing
 
