@@ -53,6 +53,8 @@ gulp.task('release', ['clean-release','compile'], function() {
 			bundleOne('src/dockerfile'),
 			bundleOne('src/fsharp'),
 			bundleOne('src/go'),
+			bundleOne('src/handlebars'),
+			bundleOne('src/html'),
 			bundleOne('src/ini'),
 			bundleOne('src/jade'),
 			bundleOne('src/java'),
@@ -60,16 +62,19 @@ gulp.task('release', ['clean-release','compile'], function() {
 			bundleOne('src/lua'),
 			bundleOne('src/markdown'),
 			bundleOne('src/objective-c'),
+			bundleOne('src/php'),
 			bundleOne('src/powershell'),
 			bundleOne('src/postiats'),
 			bundleOne('src/python'),
 			bundleOne('src/r'),
+			bundleOne('src/razor'),
 			bundleOne('src/ruby'),
 			bundleOne('src/scss'),
 			bundleOne('src/sql'),
 			bundleOne('src/swift'),
 			bundleOne('src/vb'),
-			bundleOne('src/xml')
+			bundleOne('src/xml'),
+			bundleOne('src/yaml')
 		)
 		.pipe(uglify({
 			preserveComments: 'some'
@@ -87,7 +92,7 @@ gulp.task('release', ['clean-release','compile'], function() {
 
 var compilation = tsb.create(assign({ verbose: true }, require('./tsconfig.json').compilerOptions));
 
-var tsSources = require('./tsconfig.json').filesGlob;
+var tsSources = require('./tsconfig.json').include.concat(require('./tsconfig.json').files);
 
 function compileTask() {
 	return merge(

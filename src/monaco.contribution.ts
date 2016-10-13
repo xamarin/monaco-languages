@@ -20,7 +20,7 @@ interface ILangImpl {
 
 let languageDefinitions:{[languageId:string]:ILang} = {};
 
-export function loadLanguage(languageId:string): monaco.Promise<void> {
+function _loadLanguage(languageId:string): monaco.Promise<void> {
 	let module = languageDefinitions[languageId].module;
 	return new _monaco.Promise<void>((c, e, p) => {
 		require<ILangImpl>([module], (mod) => {
@@ -29,6 +29,15 @@ export function loadLanguage(languageId:string): monaco.Promise<void> {
 			c(void 0);
 		}, e);
 	});
+}
+
+let languagePromises:{[languageId:string]: monaco.Promise<void>} = {};
+
+export function loadLanguage(languageId:string): monaco.Promise<void> {
+	if (!languagePromises[languageId]) {
+		languagePromises[languageId] = _loadLanguage(languageId);
+	}
+	return languagePromises[languageId];
 }
 
 function registerLanguage(def:ILang): void {
@@ -93,6 +102,20 @@ registerLanguage({
 	module: './go'
 });
 registerLanguage({
+	id: 'handlebars',
+	extensions: ['.handlebars', '.hbs'],
+	aliases: ['Handlebars', 'handlebars'],
+	mimetypes: ['text/x-handlebars-template'],
+	module: './handlebars'
+});
+registerLanguage({
+	id: 'html',
+	extensions: ['.html', '.htm', '.shtml', '.xhtml', '.mdoc', '.jsp', '.asp', '.aspx', '.jshtm'],
+	aliases: ['HTML', 'htm', 'html', 'xhtml'],
+	mimetypes: ['text/html', 'text/x-jshtm', 'text/template', 'text/ng-template'],
+	module: './html'
+});
+registerLanguage({
 	id: 'ini',
 	extensions: [ '.ini', '.properties', '.gitconfig' ],
 	filenames: ['config', '.gitattributes', '.gitconfig', '.editorconfig'],
@@ -119,10 +142,10 @@ registerLanguage({
 	module: './lua'
 });
 registerLanguage({
-    id: 'markdown',
-    extensions: ['.md', '.markdown', '.mdown', '.mkdn', '.mkd', '.mdwn', '.mdtxt', '.mdtext'],
+	id: 'markdown',
+	extensions: ['.md', '.markdown', '.mdown', '.mkdn', '.mkd', '.mdwn', '.mdtxt', '.mdtext'],
 	aliases: ['Markdown', 'markdown'],
-    module: './markdown'
+	module: './markdown'
 });
 registerLanguage({
 	id: 'objective-c',
@@ -135,6 +158,13 @@ registerLanguage({
 	extensions: [ '.dats', '.sats', '.hats' ],
 	aliases: [ 'ATS', 'ATS/Postiats' ],
 	module: './postiats'
+});
+registerLanguage({
+	id: 'php',
+	extensions: ['.php', '.php4', '.php5', '.phtml', '.ctp'],
+	aliases: ['PHP', 'php'],
+	mimetypes: ['application/x-php'],
+	module: './php'
 });
 registerLanguage({
 	id: 'powershell',
@@ -154,6 +184,13 @@ registerLanguage({
 	extensions: [ '.r', '.rhistory', '.rprofile', '.rt' ],
 	aliases: [ 'R', 'r' ],
 	module: './r'
+});
+registerLanguage({
+	id: 'razor',
+	extensions: ['.cshtml'],
+	aliases: ['Razor', 'razor'],
+	mimetypes: ['text/x-cshtml'],
+	module: './razor'
 });
 registerLanguage({
 	id: 'ruby',
@@ -209,4 +246,11 @@ registerLanguage({
 	aliases: ['CSS', 'css'],
 	mimetypes: ['text/css'],
 	module: './css'
+});
+registerLanguage({
+	id: 'yaml',
+	extensions: ['.yaml', '.yml'],
+	aliases: ['YAML', 'yaml', 'YML', 'yml'],
+	mimetypes: ['application/x-yaml'],
+	module: './yaml'
 });
