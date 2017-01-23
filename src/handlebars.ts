@@ -17,17 +17,16 @@ export var conf:IRichLanguageConfiguration = {
 	wordPattern: /(-?\d*\.\d\w*)|([^\`\~\!\@\$\^\&\*\(\)\=\+\[\{\]\}\\\|\;\:\'\"\,\.\<\>\/\s]+)/g,
 
 	comments: {
-		blockComment: ['<!--', '-->']
+		blockComment: ['{{!--', '--}}']
 	},
 
 	brackets: [
 		['<!--', '-->'],
-		['{{', '}}']
+		['{{', '}}'],
+		['<', '>'],
+		['{', '}'],
+		['(', ')']
 	],
-
-	__electricCharacterSupport: {
-		embeddedElectricCharacters: ['*', '}', ']', ')']
-	},
 
 	autoClosingPairs: [
 		{ open: '{', close: '}' },
@@ -57,8 +56,8 @@ export var conf:IRichLanguageConfiguration = {
 }
 
 export const htmlTokenTypes = {
-	DELIM_START: 'start.delimiter.tag.html',
-	DELIM_END: 'end.delimiter.tag.html',
+	DELIM_START: 'delimiter.html',
+	DELIM_END: 'delimiter.html',
 	DELIM_COMMENT: 'comment.html',
 	COMMENT: 'comment.content.html',
 	getTag: (name: string) => {
@@ -215,14 +214,14 @@ export var language = <ILanguage> {
 
 
 		handlebarsInSimpleState: [
-			[/\{\{\{?/, 'punctuation.handlebars'],
-			[/\}\}\}?/, { token: 'punctuation.handlebars', switchTo: '@$S2.$S3' }],
+			[/\{\{\{?/, 'delimiter.handlebars'],
+			[/\}\}\}?/, { token: 'delimiter.handlebars', switchTo: '@$S2.$S3' }],
 			{ include: 'handlebarsRoot' }
 		],
 
 		handlebarsInEmbeddedState: [
-			[/\{\{\{?/, 'punctuation.handlebars'],
-			[/\}\}\}?/, { token: 'punctuation.handlebars', switchTo: '@$S2.$S3', nextEmbedded: '$S3' }],
+			[/\{\{\{?/, 'delimiter.handlebars'],
+			[/\}\}\}?/, { token: 'delimiter.handlebars', switchTo: '@$S2.$S3', nextEmbedded: '$S3' }],
 			{ include: 'handlebarsRoot' }
 		],
 

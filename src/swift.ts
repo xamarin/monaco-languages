@@ -69,8 +69,8 @@ export var language = <ILanguage> {
 			[/[{}()\[\]]/, '@brackets'],
 			[/[<>](?!@symbols)/, '@brackets'],
 			[/[.]/, 'delimiter'],
-			[/@operators/, 'keyword.operator'],
-			[/@symbols/, 'keyword.operator']
+			[/@operators/, 'operator'],
+			[/@symbols/, 'operator']
 		],
 
 
@@ -97,7 +97,7 @@ export var language = <ILanguage> {
 		],
 
 		literal: [
-			[ /"/, { token: 'string.quote', bracket: '@open', next: '@stringlit' } ],
+			[ /"/, { token: 'string.quote', next: '@stringlit' } ],
 			[ /0[b]([01]_?)+/, 'number.binary' ],
 			[ /0[o]([0-7]_?)+/, 'number.octal' ],
 			[ /0[x]([0-9a-fA-F]_?)+([pP][\-+](\d_?)+)?/, 'number.hex' ],
@@ -106,34 +106,34 @@ export var language = <ILanguage> {
 		],
 
 		stringlit: [
-			[ /\\\(/, { token: 'keyword.operator', bracket: '@open', next: '@interpolatedexpression' } ],
+			[ /\\\(/, { token: 'operator', next: '@interpolatedexpression' } ],
 			[ /@escapes/, 'string' ],
 			[ /\\./, 'string.escape.invalid' ],
-			[ /"/, { token: 'string.quote', bracket: '@close', next: '@pop' } ],
+			[ /"/, { token: 'string.quote', next: '@pop' } ],
 			[ /./, 'string' ]
 		],
 
 		interpolatedexpression: [
-			[ /\(/, { token: 'keyword.operator', bracket: '@open', next: '@interpolatedexpression' } ],
-			[ /\)/, { token: 'keyword.operator', bracket: '@close', next: '@pop' } ],
+			[ /\(/, { token: 'operator', next: '@interpolatedexpression' } ],
+			[ /\)/, { token: 'operator', next: '@pop' } ],
 			{ include: '@literal' },
 			{ include: '@keyword' },
 			{ include: '@symbol' }
 		],
 
 		keyword: [
-			[ /`/, { token: 'keyword.operator', bracket: '@open', next: '@escapedkeyword' } ],
+			[ /`/, { token: 'operator', next: '@escapedkeyword' } ],
 			[ /@identifier/, { cases: { '@keywords': 'keyword', '[A-Z][\a-zA-Z0-9$]*': 'type.identifier', '@default': 'identifier' } }]
 		],
 
 		escapedkeyword: [
-			[ /`/, { token: 'keyword.operator', bracket: '@close', next: '@pop' } ],
+			[ /`/, { token: 'operator', next: '@pop' } ],
 			[ /./, 'identifier' ]
 		],
 
 //		symbol: [
-//			[ /@symbols/, 'keyword.operator' ],
-//			[ /@operators/, 'keyword.operator' ]
+//			[ /@symbols/, 'operator' ],
+//			[ /@operators/, 'operator' ]
 //		],
 
 		invokedmethod: [

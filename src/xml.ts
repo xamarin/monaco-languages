@@ -44,35 +44,35 @@ export var language = <ILanguage> {
 
 			// Standard opening tag
 			[/(<)(@qualifiedName)/, [
-				{ token: 'delimiter.start', bracket: '@open' },
-				{ token: 'tag.tag-$2', bracket: '@open', next: '@tag.$2' }]],
+				{ token: 'delimiter' },
+				{ token: 'tag', next: '@tag' }]],
 
 			// Standard closing tag
 			[/(<\/)(@qualifiedName)(\s*)(>)/, [
-				{ token: 'delimiter.end', bracket: '@open' },
-				{ token: 'tag.tag-$2', bracket: '@close' },
+				{ token: 'delimiter' },
+				{ token: 'tag' },
 				'',
-				{ token: 'delimiter.end', bracket: '@close' }]],
+				{ token: 'delimiter' }]],
 
 			// Meta tags - instruction
 			[/(<\?)(@qualifiedName)/, [
-				{ token: 'delimiter.start', bracket: '@open' },
-				{ token: 'metatag.instruction', next: '@tag' }]],
+				{ token: 'delimiter' },
+				{ token: 'metatag', next: '@tag' }]],
 
 			// Meta tags - declaration
 			[/(<\!)(@qualifiedName)/, [
-				{ token: 'delimiter.start', bracket: '@open' },
-				{ token: 'metatag.declaration', next: '@tag' }]],
+				{ token: 'delimiter' },
+				{ token: 'metatag', next: '@tag' }]],
 
 			// CDATA
-			[/<\!\[CDATA\[/, { token: 'delimiter.cdata', bracket: '@open', next: '@cdata' }],
+			[/<\!\[CDATA\[/, { token: 'delimiter.cdata', next: '@cdata' }],
 
 			[/&\w+;/, 'string.escape'],
 		],
 
 		cdata: [
 			[/[^\]]+/, ''],
-			[/\]\]>/, { token: 'delimiter.cdata', bracket: '@close', next: '@pop' }],
+			[/\]\]>/, { token: 'delimiter.cdata', next: '@pop' }],
 			[/\]/, '']
 		],
 
@@ -82,21 +82,21 @@ export var language = <ILanguage> {
 			[/(@qualifiedName)(\s*=\s*)("[^">?\/]*|'[^'>?\/]*)(?=[\?\/]\>)/, ['attribute.name', '', 'attribute.value']],
 			[/(@qualifiedName)(\s*=\s*)("[^">]*|'[^'>]*)/, ['attribute.name', '', 'attribute.value']],
 			[/@qualifiedName/, 'attribute.name'],
-			[/\?>/, { token: 'delimiter.start', bracket: '@close', next: '@pop' }],
+			[/\?>/, { token: 'delimiter', next: '@pop' }],
 			[/(\/)(>)/, [
-				{ token: 'tag.tag-$S2', bracket: '@close' },
-				{ token: 'delimiter.start', bracket: '@close', next: '@pop' }]],
-			[/>/, { token: 'delimiter.start', bracket: '@close', next: '@pop' }],
+				{ token: 'tag' },
+				{ token: 'delimiter', next: '@pop' }]],
+			[/>/, { token: 'delimiter', next: '@pop' }],
 		],
 
 		whitespace: [
 			[/[ \t\r\n]+/, ''],
-			[/<!--/, { token: 'comment', bracket: '@open', next: '@comment' }]
+			[/<!--/, { token: 'comment', next: '@comment' }]
 		],
 
 		comment: [
 			[/[^<\-]+/, 'comment.content' ],
-			[/-->/,  { token: 'comment', bracket: '@close', next: '@pop' } ],
+			[/-->/,  { token: 'comment', next: '@pop' } ],
 			[/<!--/, 'comment.content.invalid'],
 			[/[<\-]/, 'comment.content' ]
 		],

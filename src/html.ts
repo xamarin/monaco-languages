@@ -23,11 +23,9 @@ export var conf:IRichLanguageConfiguration = {
 	brackets: [
 		['<!--', '-->'],
 		['<', '>'],
+		['{', '}'],
+		['(', ')']
 	],
-
-	__electricCharacterSupport: {
-		embeddedElectricCharacters: ['*', '}', ']', ')']
-	},
 
 	autoClosingPairs: [
 		{ open: '{', close: '}' },
@@ -39,7 +37,11 @@ export var conf:IRichLanguageConfiguration = {
 
 	surroundingPairs: [
 		{ open: '"', close: '"' },
-		{ open: '\'', close: '\'' }
+		{ open: '\'', close: '\'' },
+		{ open: '{', close: '}' },
+		{ open: '[', close: ']' },
+		{ open: '(', close: ')' },
+		{ open: '<', close: '>' },
 	],
 
 	onEnterRules: [
@@ -56,8 +58,8 @@ export var conf:IRichLanguageConfiguration = {
 };
 
 export const htmlTokenTypes = {
-	DELIM_START: 'start.delimiter.tag',
-	DELIM_END: 'end.delimiter.tag',
+	DELIM_START: 'delimiter',
+	DELIM_END: 'delimiter',
 	DELIM_COMMENT: 'comment',
 	getTag: (name: string) => {
 		return 'tag';
@@ -144,7 +146,8 @@ export var language = <ILanguage> {
 		],
 
 		scriptEmbedded: [
-			[/<\/script/, { token: '@rematch', next: '@pop', nextEmbedded: '@pop' }]
+			[/<\/script/, { token: '@rematch', next: '@pop', nextEmbedded: '@pop' }],
+			[/[^<]+/, '']
 		],
 
 		// -- END <script> tags handling
@@ -191,7 +194,8 @@ export var language = <ILanguage> {
 		],
 
 		styleEmbedded: [
-			[/<\/style/, { token: '@rematch', next: '@pop', nextEmbedded: '@pop' }]
+			[/<\/style/, { token: '@rematch', next: '@pop', nextEmbedded: '@pop' }],
+			[/[^<]+/, '']
 		],
 
 	// -- END <style> tags handling

@@ -22,13 +22,10 @@ export var conf:IRichLanguageConfiguration = {
 
 		brackets: [
 			['<!--', '-->'],
+			['<', '>'],
 			['{', '}'],
 			['(', ')']
 		],
-
-		__electricCharacterSupport: {
-			embeddedElectricCharacters: ['*', '}', ']', ')']
-		},
 
 		autoClosingPairs: [
 			{ open: '{', close: '}' },
@@ -39,7 +36,8 @@ export var conf:IRichLanguageConfiguration = {
 		],
 		surroundingPairs: [
 			{ open: '"', close: '"' },
-			{ open: '\'', close: '\'' }
+			{ open: '\'', close: '\'' },
+			{ open: '<', close: '>' }
 		],
 
 		onEnterRules: [
@@ -56,8 +54,8 @@ export var conf:IRichLanguageConfiguration = {
 };
 
 export const htmlTokenTypes = {
-	DELIM_START: 'start.delimiter.tag.html',
-	DELIM_END: 'end.delimiter.tag.html',
+	DELIM_START: 'delimiter.html',
+	DELIM_END: 'delimiter.html',
 	DELIM_COMMENT: 'comment.html',
 	COMMENT: 'comment.content.html',
 	getTag: (name: string) => {

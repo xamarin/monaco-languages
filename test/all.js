@@ -4,6 +4,7 @@ var jsdom = require('jsdom-no-contextify');
 requirejs.config({
 	baseUrl: '',
 	paths: {
+		// 'vs': '../vscode/out/vs'
 		'vs': 'node_modules/monaco-editor-core/dev/vs'
 	},
 	nodeRequire: require
@@ -24,6 +25,7 @@ requirejs([
 ], function() {
 	requirejs([
 		'out/test/bat.test',
+		'out/test/css.test',
 		'out/test/coffee.test',
 		'out/test/cpp.test',
 		'out/test/csharp.test',
@@ -34,6 +36,7 @@ requirejs([
 		'out/test/html.test',
 		'out/test/jade.test',
 		'out/test/java.test',
+		'out/test/less.test',
 		'out/test/lua.test',
 		'out/test/markdown.test',
 		'out/test/objective-c.test',
@@ -44,6 +47,7 @@ requirejs([
 		'out/test/r.test',
 		'out/test/razor.test',
 		'out/test/ruby.test',
+		'out/test/scss.test',
 		'out/test/swift.test',
 		'out/test/sql.test',
 		'out/test/vb.test',
